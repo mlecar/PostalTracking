@@ -2,8 +2,6 @@ package com.mlc.postal.services.tracking;
 
 import java.io.IOException;
 
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Form;
 import javax.ws.rs.core.Response;
 
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
@@ -17,10 +15,13 @@ public class USPS {
     public static void main(String[] args) throws JsonProcessingException, IOException {
         ResteasyClientBuilder resteasyClientBuilder = new ResteasyClientBuilder();
         ResteasyClient resteasyClient = resteasyClientBuilder.build();
-        ResteasyWebTarget target = resteasyClient.target("http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=<TrackRequestUSERID=\"xxxxxxxxxxxx\"><TrackID ID=\"EJ958083578US\"></TrackID></TrackRequest>");
+        ResteasyWebTarget target = resteasyClient.target("http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=<TrackRequest USERID=\"792MLCSA6462\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
+        // "http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2%20&XML=%3CTrackRequest%20USERID=%22792MLCSA6462%22%3E%20%3CTrackID%20ID=%22CB105454173US%22%3E%3C/TrackID%3E%3C/TrackRequest%3E");
+        // http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2%20&XML=%3CTrackRequest%20USERID=%22792MLCSA6462%22%3E%20%3CTrackID%20ID=%22CB105454173US%22%3E%3C/TrackID%3E%3C/TrackRequest%3E
+        // ("http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequestUSERID=\"790MLCSA6406\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
+        // "http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequestUSERID=\"790MLCSA6406\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
 
-        Form form = new Form().param("API", "TrackV2");
-        Response response = target.request().accept("application/xml").post(Entity.form(form));
+        Response response = target.request().accept("application/xml").get();
 
         System.out.println(response.readEntity(String.class));
         /*
