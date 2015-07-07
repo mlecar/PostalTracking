@@ -1,4 +1,4 @@
-package tracking;
+package com.mlc.postal.services.tracking;
 
 import java.io.IOException;
 
