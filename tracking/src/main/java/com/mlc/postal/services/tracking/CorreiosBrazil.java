@@ -16,21 +16,27 @@ import com.fasterxml.jackson.databind.ObjectReader;
 public class CorreiosBrazil {
 
     public static void main(String[] args) throws JsonProcessingException, IOException {
+        String[] trackingCodes = new String[] { "CB105454173US", "CB105450389US" };
+
         ResteasyClientBuilder resteasyClientBuilder = new ResteasyClientBuilder();
         ResteasyClient resteasyClient = resteasyClientBuilder.build();
-        ResteasyWebTarget target = resteasyClient.target("http://developers.agenciaideias.com.br/correios/rastreamento/json/CB105450389US");
 
-        Response response = target.request().accept("application/json").get();
-        String tracking = response.readEntity(String.class);
+        for (String trackingCode : trackingCodes) {
+            System.out.println("######## trackingCode " + trackingCode + " ##########");
+            ResteasyWebTarget target = resteasyClient.target("http://developers.agenciaideias.com.br/correios/rastreamento/json/{trackingCode}").resolveTemplate("trackingCode", trackingCode);
 
-        ObjectReader reader = new ObjectMapper().reader();
-        JsonNode nodes = reader.readTree(tracking);
+            Response response = target.request().accept("application/json").get();
+            String tracking = response.readEntity(String.class);
 
-        for (JsonNode node : nodes) {
-            // System.out.println(node);
-            System.out.println(node.get("data").asText());
-            System.out.println("\t" + node.get("local").asText() + " - " + node.get("acao").asText());
-            System.out.println("\t" + node.get("detalhes").asText());
+            ObjectReader reader = new ObjectMapper().reader();
+            JsonNode nodes = reader.readTree(tracking);
+
+            for (JsonNode node : nodes) {
+                // System.out.println(node);
+                System.out.println(node.get("data").asText());
+                System.out.println("\t" + node.get("local").asText() + " - " + node.get("acao").asText());
+                System.out.println("\t" + node.get("detalhes").asText());
+            }
         }
     }
 
