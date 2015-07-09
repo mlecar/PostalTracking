@@ -2,13 +2,12 @@ package com.mlc.postal.services.tracking;
 
 import java.io.IOException;
 
-import javax.ws.rs.core.Response;
-
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.mlc.postal.services.tracking.usps.TrackResponse;
 
 public class USPS {
 
@@ -21,9 +20,9 @@ public class USPS {
         // ("http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequestUSERID=\"790MLCSA6406\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
         // "http://production.shippingapis.com/ShippingAPI.dll?API=TrackV2&XML=<TrackRequestUSERID=\"790MLCSA6406\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
 
-        Response response = target.request().accept("application/xml").get();
+        TrackResponse response = target.request().accept("application/xml").get(TrackResponse.class);
 
-        System.out.println(response.readEntity(String.class));
+        System.out.println(response);
         /*
          * String tracking = response.readEntity(String.class);
          * 
