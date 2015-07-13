@@ -5,13 +5,15 @@ import java.io.IOException;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mlc.postal.services.tracking.usps.TrackResponse;
 
+@Component
 public class USPS {
 
-    public static void main(String[] args) throws JsonProcessingException, IOException {
+    public void track(String trackingCode) throws JsonProcessingException, IOException {
         ResteasyClientBuilder resteasyClientBuilder = new ResteasyClientBuilder();
         ResteasyClient resteasyClient = resteasyClientBuilder.build();
         ResteasyWebTarget target = resteasyClient.target("http://production.shippingapis.com/ShippingAPITest.dll?API=TrackV2&XML=<TrackRequest USERID=\"792MLCSA6462\"><TrackID ID=\"CB105454173US\"></TrackID></TrackRequest>");
@@ -23,16 +25,5 @@ public class USPS {
         TrackResponse response = target.request().accept("application/xml").get(TrackResponse.class);
 
         System.out.println(response);
-        /*
-         * String tracking = response.readEntity(String.class);
-         * 
-         * ObjectReader reader = new ObjectMapper().reader(); JsonNode nodes =
-         * reader.readTree(tracking);
-         * 
-         * for (JsonNode node : nodes) { // System.out.println(node);
-         * System.out.println(node.get("data").asText());
-         * System.out.println("\t" + node.get("local").asText() + " - " +
-         * node.get("acao").asText()); System.out.println("\t" +
-         * node.get("detalhes").asText()); }
-         */}
+    }
 }

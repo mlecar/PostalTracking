@@ -21,6 +21,7 @@ public class TrackResponse {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(trackInfo.getID());
+        sb.append("\n" + trackInfo.getTrackSummary());
         for (String trackDetail : trackInfo.getTrackDetail()) {
             sb.append("\n" + trackDetail);
         }
