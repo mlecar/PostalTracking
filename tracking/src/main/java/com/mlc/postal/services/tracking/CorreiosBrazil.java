@@ -7,13 +7,15 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
 
-public class CorreiosBrazil {
+@Component
+public class CorreiosBrazil implements Tracking {
 
     public void track(String trackingCode) throws JsonProcessingException, IOException {
         ResteasyClientBuilder resteasyClientBuilder = new ResteasyClientBuilder();

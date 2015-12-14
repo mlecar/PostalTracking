@@ -11,7 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.mlc.postal.services.tracking.usps.TrackResponse;
 
 @Component
-public class USPS {
+public class USPS implements Tracking {
 
     public void track(String trackingCode) throws JsonProcessingException, IOException {
         ResteasyClientBuilder resteasyClientBuilder = new ResteasyClientBuilder();
